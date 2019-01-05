@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">NewsApp</string>
+    <string name="empty_state">No news stories available</string>
+    <string name="nav_headlines">Headlines</string>
+    <string name="nav_newsstand">Newsstand</string>
+
+
+    <!-- content description for image buttons in fragment_news_stand -->
+    <string name="cnbc_desc">CNBC</string>
+    <string name="fTimes_desc">Financial Times</string>
+    <string name="fortune_desc">Fortune</string>
+    <string name="wsj_desc">WSJ</string>
+    <string name="economist_desc">The Economist</string>
+    <string name="insider_desc">Business Insider</string>
+</resources>
