@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity{
     }
 
     public static class NewsPagerAdapter extends FragmentPagerAdapter {
-        private static int NUM_ITEMS = 8;
+        private static int NUM_ITEMS = 7;
 
         public NewsPagerAdapter(FragmentManager fragmentManager) {
             super(fragmentManager);
@@ -81,8 +81,8 @@ public class MainActivity extends AppCompatActivity{
         @Override
         public Fragment getItem(int i) {
             switch (i) {
-                case 0: /* Fragment # 0 - This will show PagerFragment */
-                    return PagerFragment.newInstance("https://newsapi.org/v2/top-headlines?category=general&apiKey=1bff5f606ee54cd48c4362f6429247b5");
+                case 0: /* Fragment # 0 - This will show LatestFragment */
+                    return PagerFragment.newInstance("https://newsapi.org/v2/top-headlines?category=general&sources=&apiKey=1bff5f606ee54cd48c4362f6429247b5");
                 case 1: /* Fragment # 2 - This will show BusinessFragment */
                     return PagerFragment.newInstance("https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=1bff5f606ee54cd48c4362f6429247b5");
                 case 2: /* Fragment # 3 - This will show EntertainmentFragment */

@@ -2,22 +2,26 @@ package com.example.timothyyirenkyi.newsapp.Fragments;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Intent;
+import android.content.ComponentName;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.customtabs.CustomTabsClient;
+import android.support.customtabs.CustomTabsIntent;
+import android.support.customtabs.CustomTabsServiceConnection;
+import android.support.customtabs.CustomTabsSession;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-
 import com.example.timothyyirenkyi.newsapp.NewsAdapter;
 import com.example.timothyyirenkyi.newsapp.NewsStories;
 import com.example.timothyyirenkyi.newsapp.NewsViewModel;
-import com.example.timothyyirenkyi.newsapp.databinding.FragmentLatestBinding;
+import com.example.timothyyirenkyi.newsapp.R;
+import com.example.timothyyirenkyi.newsapp.databinding.FragmentPageBinding;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +34,19 @@ public class PagerFragment extends Fragment{
     private String webUrl;
 
     private NewsViewModel nModel;
+
+    private String mPackageNameToBind;
+
+    public static final String CUSTOM_TAB_PACKAGE_NAME = "com.chrome.dev";
+
+    CustomTabsClient mClient;
+
+    CustomTabsSession mCustomTabsSession;
+
+    CustomTabsServiceConnection mCustomTabsServiceConnection;
+
+    CustomTabsIntent customTabsIntent;
+
     // newInstance constructor for creating fragment with arguments
     public static PagerFragment newInstance(String webUrl) {
         PagerFragment pagerFragment = new PagerFragment();
@@ -39,20 +56,41 @@ public class PagerFragment extends Fragment{
         return pagerFragment;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+    }
+
     // Store instance variables based on arguments passed
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mPackageNameToBind = getActivity().getPackageName();
+
+        mCustomTabsServiceConnection = new CustomTabsServiceConnection() {
+            @Override
+            public void onCustomTabsServiceConnected(ComponentName componentName, CustomTabsClient customTabsClient) {
+                mClient = customTabsClient;
+                mClient.warmup(0);
+                mCustomTabsSession = mClient.newSession(null);
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName componentName) {
+                mClient = null;
+            }
+        };
     }
 
     // Inflate the view for the fragment based on layout XML
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        FragmentLatestBinding binding = FragmentLatestBinding.inflate(getLayoutInflater(), container, false);
+        FragmentPageBinding binding = FragmentPageBinding.inflate(getLayoutInflater(), container, false);
         View view = binding.getRoot();
         newsAdapter = new NewsAdapter(getActivity(), new ArrayList<NewsStories>());
-        binding.latestListView.setAdapter(newsAdapter);
+        binding.pageList.setAdapter(newsAdapter);
 
 
         // Get the ViewModel
@@ -78,16 +116,16 @@ public class PagerFragment extends Fragment{
         // LifecycleOwner and the Observer
         nModel.getData().observe(this, newsObserver);
 
-        binding.latestListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        binding.pageList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 webUrl = newsAdapter.getItem(i).getUrl();
                 if (webUrl != null) {
-                    Uri webPage = Uri.parse(webUrl);
-                    Intent intent = new Intent(Intent.ACTION_VIEW, webPage);
-                    if (intent.resolveActivity(getContext().getPackageManager()) != null) {
-                        startActivity(intent);
-                    }
+                    CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+                    builder.setToolbarColor(getResources().getColor(R.color.colorPrimaryDark));
+                    builder.setShowTitle(true);
+                    CustomTabsIntent customTabsIntent = builder.build();
+                    customTabsIntent.launchUrl(getContext(), Uri.parse(webUrl));
                 }
             }
         });

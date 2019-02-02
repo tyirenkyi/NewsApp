@@ -1,6 +1,6 @@
 package com.example.timothyyirenkyi.newsapp;
 
-import android.app.Activity;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -14,7 +14,7 @@ public class NewsAdapter extends ArrayAdapter<NewsStories> {
 
     private String webUrl;
 
-    public NewsAdapter(Activity context, ArrayList<NewsStories> currentNews) {
+    public NewsAdapter(Context context, ArrayList<NewsStories> currentNews) {
         super(context, 0, currentNews);
     }
 
@@ -30,17 +30,17 @@ public class NewsAdapter extends ArrayAdapter<NewsStories> {
         NewsStories currentNews = getItem(position);
 
         // Find the TextView in the layout with the ID name_textView
-        TextView nameTextView = listItemView.findViewById(R.id.name_textView);
+        TextView nameTextView = listItemView.findViewById(R.id.source);
         // Display the name of the current News story in that TextView
         nameTextView.setText(currentNews.getName());
 
         // Find the TextView in the layout with the ID title_textView
-        TextView titleTextView = listItemView.findViewById(R.id.title_textView);
+        TextView titleTextView = listItemView.findViewById(R.id.news_title);
         // Display the title of the current News story in that TextView
         titleTextView.setText(currentNews.getTitle());
 
         // Find the TextView in the layout with the ID date_textView
-        TextView dateTextView = listItemView.findViewById(R.id.date_textView);
+        TextView dateTextView = listItemView.findViewById(R.id.news_date);
         // Display the date of the current News story in that TextView
         dateTextView.setText(currentNews.getDatePub());
 

@@ -144,7 +144,8 @@ public class QueryUtils {
                 String title = newsObjectJSON.optString("title");
                 String publishedAt = newsObjectJSON.optString("publishedAt");
                 String url = newsObjectJSON.optString("url");
-                newsStories.add(new NewsStories(name, title, publishedAt, url));
+                int id = index;
+                newsStories.add(new NewsStories(id, name, title, publishedAt, url));
             }
         } catch (JSONException e) {
             Log.e("QueryUtils", "Problem parsing the news JSON results", e);
