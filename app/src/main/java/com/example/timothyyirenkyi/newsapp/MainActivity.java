@@ -88,15 +88,13 @@ public class MainActivity extends AppCompatActivity{
             switch (i) {
                 case 0: /* Fragment # 2 - This will show BusinessFragment */
                     return PagerFragment.newInstance("https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=1bff5f606ee54cd48c4362f6429247b5");
-                case 1: /* Fragment # 3 - This will show EntertainmentFragment */
-                    return PagerFragment.newInstance("https://newsapi.org/v2/top-headlines?country=us&category=entertainment&apiKey=1bff5f606ee54cd48c4362f6429247b5");
-                case 2: /* Fragment # 4 - This will show HealthFragment */
+                case 1: /* Fragment # 4 - This will show HealthFragment */
                     return PagerFragment.newInstance("https://newsapi.org/v2/top-headlines?country=us&category=health&apiKey=1bff5f606ee54cd48c4362f6429247b5");
-                case 3: /* Fragment # 5 - This will show ScienceFragment */
+                case 2: /* Fragment # 5 - This will show ScienceFragment */
                     return PagerFragment.newInstance("https://newsapi.org/v2/top-headlines?country=us&category=science&apiKey=1bff5f606ee54cd48c4362f6429247b5");
-                case 4: /* Fragment # 6 - This will show SportsFragment */
+                case 3: /* Fragment # 6 - This will show SportsFragment */
                     return PagerFragment.newInstance("https://newsapi.org/v2/top-headlines?category=sports&country=gb&apiKey=1bff5f606ee54cd48c4362f6429247b5");
-                case 5: /* Fragment # 7 - This will show TechFragment */
+                case 4: /* Fragment # 7 - This will show TechFragment */
                     return PagerFragment.newInstance("https://newsapi.org/v2/top-headlines?country=us&category=technology&apiKey=1bff5f606ee54cd48c4362f6429247b5");
                 default:
                     return null;

@@ -15,7 +15,10 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class QueryUtils {
@@ -143,9 +146,11 @@ public class QueryUtils {
                 String name = source.optString("name");
                 String title = newsObjectJSON.optString("title");
                 String publishedAt = newsObjectJSON.optString("publishedAt");
+                String date = getDate(publishedAt);
+
                 String url = newsObjectJSON.optString("url");
                 int id = index;
-                newsStories.add(new NewsStories(id, name, title, publishedAt, url));
+                newsStories.add(new NewsStories(id, name, title, date, url));
             }
         } catch (JSONException e) {
             Log.e("QueryUtils", "Problem parsing the news JSON results", e);
@@ -153,5 +158,54 @@ public class QueryUtils {
 
         // Return the newsStories
         return newsStories;
+    }
+
+    private static String getDate(String publishedAt) {
+        String publishDate = publishedAt.substring(0, 10);
+        String month = publishDate.substring(5, 7);
+        String monthInWords = " ";
+        switch (month) {
+            case "01":
+                monthInWords = "January";
+                break;
+            case "02":
+                monthInWords = "February";
+                break;
+            case "03":
+                monthInWords = "March";
+                break;
+            case "04":
+                monthInWords = "April";
+                break;
+            case "05":
+                monthInWords = "May";
+                break;
+            case "06":
+                monthInWords = "June";
+                break;
+            case "07":
+                monthInWords = "July";
+                break;
+            case "08":
+                monthInWords = "August";
+                break;
+            case "09":
+                monthInWords = "September";
+                break;
+            case "10":
+                monthInWords = "October";
+                break;
+            case "11":
+                monthInWords = "November";
+                break;
+            case "12":
+                monthInWords = "December";
+                break;
+        }
+
+        String day = publishDate.substring(8, 10);
+
+        String date = monthInWords + " " + day;
+        return date;
     }
 }

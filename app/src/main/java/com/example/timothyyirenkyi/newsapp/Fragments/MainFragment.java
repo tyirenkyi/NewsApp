@@ -29,7 +29,6 @@ public class MainFragment extends Fragment {
         TabLayout tabLayout = view.findViewById(R.id.tab_layout);
         // Set the text for each tab.
         tabLayout.addTab(tabLayout.newTab().setText("Business"));
-        tabLayout.addTab(tabLayout.newTab().setText("Entertainment"));
         tabLayout.addTab(tabLayout.newTab().setText("Health"));
         tabLayout.addTab(tabLayout.newTab().setText("Science"));
         tabLayout.addTab(tabLayout.newTab().setText("Sports"));
